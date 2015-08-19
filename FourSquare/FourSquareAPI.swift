@@ -10,31 +10,21 @@ import Foundation
 import FSOAuth
 
 let FourSquareDefaultFetchLimit = 1
-let FourSquareOAuthAccessCodeKey = "kFourSquareOAuthAccessCodeKey"
+let FSOAuthAccessCodeKey = "kFourSquareOAuthAccessCodeKey"
+let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
+let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
 
-let FourSquareRedirectURL = "foursquareapi://authorized"
-let FourSquareRedirectURLScheme = "foursquareapi"
+let FSRedirectURL = "foursquareapi://authorized"
+let FSRedirectURLScheme = "foursquareapi"
 
-let FourSquareUsersURL = "https://api.foursquare.com/v2/users"
-let FourSquareVenuesURL = "https://api.foursquare.com/v2/venues/explore"
-
-
-extension NSUserDefaults {
-    class func setFourSquareOAuthAccessKey(accessKey :NSString) {
-        NSUserDefaults.standardUserDefaults().setObject(accessKey, forKey: FourSquareOAuthAccessCodeKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
-    
-    class func getFourSquareOAuthAccessKey() -> String? {
-        return NSUserDefaults.standardUserDefaults().stringForKey(FourSquareOAuthAccessCodeKey)
-    }
-}
+let FSUsersURL = "https://api.foursquare.com/v2/users"
+let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
 
 
 //MARK: SETUP
 
 public func handleUrl(url :NSURL) {
-    if url.scheme == FourSquareRedirectURLScheme {
+    if url.scheme == FSRedirectURLScheme {
         var errorCode :FSOAuthErrorCode = .None
         var accessCode = FSOAuth.accessCodeForFSOAuthURL(url, error: &errorCode)
         
@@ -56,7 +46,7 @@ public func setupOAuthAccessCode() {
     
     let accessCode = NSUserDefaults.getFourSquareOAuthAccessKey()
     if accessCode == nil {
-        var statusCode :FSOAuthStatusCode = FSOAuth.authorizeUserUsingClientId(FSClientId, callbackURIString: FourSquareRedirectURL)
+        var statusCode :FSOAuthStatusCode = FSOAuth.authorizeUserUsingClientId(FSClientId, callbackURIString: FSRedirectURL)
         var errorMessage = FourSquareAPI.oauthStatusErrorMessageForCode(statusCode)
         println("OAuth Status: \(errorMessage)")
     } else {
@@ -70,7 +60,7 @@ public func setupOAuthAccessCode() {
 
 //MARK: USERS - GENERAL
 public func getUser(userId :String) {
-    var fetchUsersURL = FourSquareUsersURL + "/" + userId
+    var fetchUsersURL = FSUsersURL + "/" + userId
     Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil)
 }
 
@@ -83,5 +73,20 @@ public func getUser(userId :String) {
 //MARK: VENUE
 public func getVenueNearLocation(location :String, limit :Int = FourSquareDefaultFetchLimit) {
     var fetchParams = ["near":location, "limit":String(limit)]
-    Manager.sharedInstance.request(method: .GET, URLString: FourSquareVenuesURL, parameters: fetchParams)
+    Manager.sharedInstance.request(method: .GET, URLString: FSVenuesURL, parameters: fetchParams)
+}
+
+
+
+//MARK: EXTENSION
+
+extension NSUserDefaults {
+    class func setFourSquareOAuthAccessKey(accessKey :NSString) {
+        NSUserDefaults.standardUserDefaults().setObject(accessKey, forKey: FSOAuthAccessCodeKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func getFourSquareOAuthAccessKey() -> String? {
+        return NSUserDefaults.standardUserDefaults().stringForKey(FSOAuthAccessCodeKey)
+    }
 }

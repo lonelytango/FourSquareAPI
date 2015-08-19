@@ -8,16 +8,6 @@
 
 import Alamofire
 
-extension Dictionary {
-    mutating func merge<K, V>(dict: [K: V]){
-        for (k, v) in dict {
-            self.updateValue(v as! Value, forKey: k as! Key)
-        }
-    }
-}
-
-public let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
-public let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
 let FSDefaultParameters = ["v":"20140806", "m":"foursquare", "client_id":FSClientId, "client_secret":FSClientSecret]
 
 public class Manager {
@@ -47,4 +37,12 @@ public class Manager {
         }
         return Singleton.instance
     }()
+}
+
+extension Dictionary {
+    mutating func merge<K, V>(dict: [K: V]){
+        for (k, v) in dict {
+            self.updateValue(v as! Value, forKey: k as! Key)
+        }
+    }
 }
