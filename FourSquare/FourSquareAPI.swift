@@ -15,6 +15,6 @@ public func requestUser(userId :String) {
 }
 
 public func requestVenueNearLocation(location :String) {
-    var fetchParams = Dictionary(dictionaryLiteral:("near", location), ("limit", String(FourSquareDefaultFetchLimit)))
+    var fetchParams = ["near":location, "limit":String(FourSquareDefaultFetchLimit)]
     Manager.sharedInstance.request("https://api.foursquare.com/v2/venues/explore", parameters: fetchParams)
 }
