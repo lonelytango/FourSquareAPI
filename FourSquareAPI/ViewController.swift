@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         
         //FourSquareAPI.requestVenueNearLocation("Elmhurst")
         //FourSquareAPI.getUser("31662724")
+        FourSquareAPI.getPendingFriendRequests()
     }
 
     override func didReceiveMemoryWarning() {

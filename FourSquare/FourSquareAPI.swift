@@ -10,7 +10,7 @@ import Foundation
 import FSOAuth
 
 let FourSquareDefaultFetchLimit = 1
-let FSOAuthAccessCodeKey = "kFourSquareOAuthAccessCodeKey"
+let FSOAuthAccessTokenKey = "kFourSquareOAuthAccessToken"
 let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
 let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
 
@@ -19,7 +19,7 @@ let FSRedirectURLScheme = "foursquareapi"
 
 let FSUsersURL = "https://api.foursquare.com/v2/users"
 let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
-
+let FSUserEndpointRequest = "requests"
 
 //MARK: SETUP
 
@@ -30,12 +30,20 @@ public func handleUrl(url :NSURL) {
         
         if errorCode == FSOAuthErrorCode.None {
             println("Access Code: \(accessCode)")
-            Manager.sharedInstance.latestAccessCode = accessCode
-            NSUserDefaults.setFourSquareOAuthAccessKey(accessCode)
+            
+            FSOAuth.requestAccessTokenForCode(accessCode, clientId: FSClientId, callbackURIString:FSRedirectURL, clientSecret: FSClientSecret, completionBlock: { (accessToken, requestComplete, errorCode) -> Void in
+                if (requestComplete) {
+                    Manager.sharedInstance.latestAccessToken = accessToken
+                    NSUserDefaults.setFSOAuthAccessToken(accessToken)
+                    println("Access Token: \(accessToken)")
+                } else {
+                    let errorMessage = oauthErrorMessageForCode(errorCode)
+                    println("Error Message: \(errorMessage)")
+                }
+            })
             
         } else {
             let errorMessage = oauthErrorMessageForCode(errorCode)
-            //let errorMessage = ErrorHandling.errorMessageForCode(errorCode)
             println("Error Message: \(errorMessage)")
         }
     }
@@ -44,16 +52,16 @@ public func handleUrl(url :NSURL) {
 public func setupOAuthAccessCode() {
     //Note that OAuth Key will not be expired once set up.
     
-    let accessCode = NSUserDefaults.getFourSquareOAuthAccessKey()
-    if accessCode == nil {
+    let accessToken = NSUserDefaults.getFSOAuthAccessToken()
+    if accessToken == nil {
         var statusCode :FSOAuthStatusCode = FSOAuth.authorizeUserUsingClientId(FSClientId, callbackURIString: FSRedirectURL)
         var errorMessage = FourSquareAPI.oauthStatusErrorMessageForCode(statusCode)
         println("OAuth Status: \(errorMessage)")
+    
     } else {
-        
         //Check if the OAuth key is valid.
-        Manager.sharedInstance.latestAccessCode = accessCode
-        println("Access key setup properly: \(accessCode)")
+        Manager.sharedInstance.latestAccessToken = accessToken
+        println("Access Token already setup: \(accessToken)")
     }
 }
 
@@ -65,7 +73,10 @@ public func getUser(userId :String) {
 }
 
 //MARK: USERS - ASPECTS
-//public func requestUserFriendRequests
+public func getPendingFriendRequests() {
+    var requestURL = FSUsersURL + "/" + FSUserEndpointRequest
+    Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
+}
 
 //MARK: USERS - ACTIONS
 
@@ -81,12 +92,12 @@ public func getVenueNearLocation(location :String, limit :Int = FourSquareDefaul
 //MARK: EXTENSION
 
 extension NSUserDefaults {
-    class func setFourSquareOAuthAccessKey(accessKey :NSString) {
-        NSUserDefaults.standardUserDefaults().setObject(accessKey, forKey: FSOAuthAccessCodeKey)
+    class func setFSOAuthAccessToken(accessKey :NSString) {
+        NSUserDefaults.standardUserDefaults().setObject(accessKey, forKey: FSOAuthAccessTokenKey)
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    class func getFourSquareOAuthAccessKey() -> String? {
-        return NSUserDefaults.standardUserDefaults().stringForKey(FSOAuthAccessCodeKey)
+    class func getFSOAuthAccessToken() -> String? {
+        return NSUserDefaults.standardUserDefaults().stringForKey(FSOAuthAccessTokenKey)
     }
 }

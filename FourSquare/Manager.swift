@@ -12,15 +12,19 @@ let FSDefaultParameters = ["v":"20140806", "m":"foursquare", "client_id":FSClien
 
 public class Manager {
     
-    var latestAccessCode = NSUserDefaults.getFourSquareOAuthAccessKey()
+    var latestAccessToken = NSUserDefaults.getFSOAuthAccessToken()
     
-    func request(#method: Method, URLString: URLStringConvertible, parameters: Dictionary <String, String>?) {
+    func request(#method: Method, URLString: URLStringConvertible, parameters: Dictionary <String, String>?, isUserless: Bool = true) {
         
         var fetchParams = parameters
         if (parameters != nil) {
             fetchParams!.merge(FSDefaultParameters)
         } else {
             fetchParams = FSDefaultParameters
+        }
+        
+        if !isUserless && latestAccessToken != nil {
+            fetchParams!["oauth_token"] = latestAccessToken
         }
         
         Alamofire.request(method, URLString, parameters: fetchParams)
