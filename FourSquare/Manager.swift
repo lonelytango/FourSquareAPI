@@ -16,18 +16,24 @@ extension Dictionary {
     }
 }
 
-let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
-let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
+public let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
+public let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
 let FSDefaultParameters = ["v":"20140806", "m":"foursquare", "client_id":FSClientId, "client_secret":FSClientSecret]
 
 public class Manager {
     
-    func request(URLString: URLStringConvertible, parameters: Dictionary <String, String>) {
+    var latestAccessCode :String?
+    
+    func request(#method: Method, URLString: URLStringConvertible, parameters: Dictionary <String, String>?) {
         
         var fetchParams = parameters
-        fetchParams.merge(FSDefaultParameters)
+        if (parameters != nil) {
+            fetchParams!.merge(FSDefaultParameters)
+        } else {
+            fetchParams = FSDefaultParameters
+        }
         
-        Alamofire.request(.GET, URLString, parameters: fetchParams)
+        Alamofire.request(method, URLString, parameters: fetchParams)
             .responseJSON { request, response, JSON, _ in
                 println(request)
                 println(JSON)

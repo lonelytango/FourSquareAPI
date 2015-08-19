@@ -17,6 +17,7 @@
 		4DDE77B01B84774D00809D91 /* FourSquareAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */; };
 		AA7D9240EA539FB7CC8DB2A6 /* Pods_FourSquareAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9F6719BC35CD957914BA54 /* Pods_FourSquareAPITests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E53406001B850DC6009EA517 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53405FF1B850DC6009EA517 /* Manager.swift */; };
+		E53406021B853417009EA517 /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53406011B853417009EA517 /* ErrorHandling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		D5B1B333FF4A246B1CB928CF /* Pods-FourSquareAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FourSquareAPI.release.xcconfig"; path = "Pods/Target Support Files/Pods-FourSquareAPI/Pods-FourSquareAPI.release.xcconfig"; sourceTree = "<group>"; };
 		D8A990863744CA1A6B08A380 /* Pods-FourSquareAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FourSquareAPI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FourSquareAPI/Pods-FourSquareAPI.debug.xcconfig"; sourceTree = "<group>"; };
 		E53405FF1B850DC6009EA517 /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		E53406011B853417009EA517 /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
 		FD9F6719BC35CD957914BA54 /* Pods_FourSquareAPITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FourSquareAPITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -134,6 +136,7 @@
 			children = (
 				4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */,
 				E53405FF1B850DC6009EA517 /* Manager.swift */,
+				E53406011B853417009EA517 /* ErrorHandling.swift */,
 			);
 			path = FourSquare;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 			files = (
 				4DDE77911B8476E100809D91 /* ViewController.swift in Sources */,
 				4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */,
+				E53406021B853417009EA517 /* ErrorHandling.swift in Sources */,
 				4DDE77B01B84774D00809D91 /* FourSquareAPI.swift in Sources */,
 				E53406001B850DC6009EA517 /* Manager.swift in Sources */,
 			);

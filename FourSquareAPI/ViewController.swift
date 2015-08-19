@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FSOAuth
 
 class ViewController: UIViewController {
 
@@ -14,7 +15,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        FourSquareAPI.requestVenueNearLocation("Elmhurst")
+        //FourSquareAPI.requestVenueNearLocation("Elmhurst")
+        //FourSquareAPI.getUser("31662724")
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,6 +24,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    
+    //Action Handler
+    @IBAction func handleConnectFourSquare(sender :AnyObject) {
+        FourSquareAPI.setupOAuthAccessCode()
+    }
 }
 
