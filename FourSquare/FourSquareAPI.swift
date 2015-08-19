@@ -17,11 +17,13 @@ class FourSquareAPI: NSObject {
             ("v", "20140806"),
             ("m", "foursquare"),
             ("client_id", "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"),
-            ("client_secret", "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"))
+            ("client_secret", "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"),
+            ("limit", 5))
         
         Alamofire.request(.GET, "https://api.foursquare.com/v2/venues/explore", parameters:parameters)
-        .responseJSON { _, _, JSON, _ in
-                println(JSON)
+        .responseJSON { request, response, JSON, _ in
+            println(request)
+            println(JSON)
         }
     }
     
