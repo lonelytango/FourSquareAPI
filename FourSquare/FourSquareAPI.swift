@@ -11,11 +11,17 @@ import Alamofire
 class FourSquareAPI: NSObject {
     
     func testCall() {
-        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
-            .response { request, response, data, error in
-                println(request)
-                println(response)
-                println(error)
+        //client_id=CLIENT_ID&client_secret=CLIENT_SECRET
+        var parameters = Dictionary(dictionaryLiteral:
+            ("near", "New York, NY"),
+            ("v", "20140806"),
+            ("m", "foursquare"),
+            ("client_id", "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"),
+            ("client_secret", "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"))
+        
+        Alamofire.request(.GET, "https://api.foursquare.com/v2/venues/explore", parameters:parameters)
+        .responseJSON { _, _, JSON, _ in
+                println(JSON)
         }
     }
     
