@@ -12,7 +12,7 @@ let FSDefaultParameters = ["v":"20140806", "m":"foursquare", "client_id":FSClien
 
 public class Manager {
     
-    var latestAccessCode :String?
+    var latestAccessCode = NSUserDefaults.getFourSquareOAuthAccessKey()
     
     func request(#method: Method, URLString: URLStringConvertible, parameters: Dictionary <String, String>?) {
         
