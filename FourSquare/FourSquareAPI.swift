@@ -20,6 +20,7 @@ let FSRedirectURLScheme = "foursquareapi"
 let FSUsersURL = "https://api.foursquare.com/v2/users"
 let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
 let FSUserEndpointRequest = "requests"
+let FSUserEndpointSearch = "search"
 
 //MARK: SETUP
 
@@ -72,11 +73,26 @@ public func getUser(userId :String) {
     Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil)
 }
 
-//MARK: USERS - ASPECTS
-public func getPendingFriendRequests() {
+public func getUserPendingFriendRequests() {
     var requestURL = FSUsersURL + "/" + FSUserEndpointRequest
     Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
 }
+
+public func searchUsers(#phone :String?, #email :String?, #twitter :String?, #twitterSource :String?, #fbid :String?, #name :String?, onlyPages :Bool = false) {
+    var params = Dictionary<String, String>()
+    if (phone != nil)               {params["phone"] = phone}
+    if (email != nil)               {params["email"] = email}
+    if (twitter != nil)             {params["twitter"] = twitter}
+    if (twitterSource != nil)       {params["twitterSource"] = twitterSource}
+    if (fbid != nil)                {params["fbid"] = fbid}
+    if (name != nil)                {params["name"] = name}
+    if (onlyPages)                  {params["onlyPages"] = "true"}
+    
+    var requestURL = FSUsersURL + "/" + FSUserEndpointSearch
+    Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
+}
+
+//MARK: USERS - ASPECTS
 
 //MARK: USERS - ACTIONS
 
