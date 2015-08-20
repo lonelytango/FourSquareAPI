@@ -8,13 +8,18 @@
 
 import Alamofire
 
-let FSDefaultParameters = ["v":"20140806", "m":"foursquare", "client_id":FSClientId, "client_secret":FSClientSecret]
+let FSDefaultParameters = ["v":"20140806", "client_id":FSClientId, "client_secret":FSClientSecret]
+
+enum FSMode: String {
+    case FourSquare = "foursquare"
+    case Swarm = "swarm"
+}
 
 public class Manager {
     
     var latestAccessToken = NSUserDefaults.getFSOAuthAccessToken()
     
-    func request(#method: Method, URLString: URLStringConvertible, parameters: Dictionary <String, String>?, isUserless: Bool = true) {
+    func request(#method :Method, URLString :URLStringConvertible, parameters :Dictionary <String, String>?, isUserless :Bool = true, mode :FSMode = .FourSquare) {
         
         var fetchParams = parameters
         if (parameters != nil) {
@@ -22,6 +27,8 @@ public class Manager {
         } else {
             fetchParams = FSDefaultParameters
         }
+        
+        fetchParams!["m"] = mode.rawValue //Support swarm
         
         if !isUserless && latestAccessToken != nil {
             fetchParams!["oauth_token"] = latestAccessToken

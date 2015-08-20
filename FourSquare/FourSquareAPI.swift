@@ -73,11 +73,13 @@ public func getUser(userId :String) {
     Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil)
 }
 
+//https://developer.foursquare.com/docs/users/requests
 public func getUserPendingFriendRequests() {
     var requestURL = FSUsersURL + "/" + FSUserEndpointRequest
     Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
 }
 
+//https://developer.foursquare.com/docs/users/search
 public func searchUsers(#phone :String?, #email :String?, #twitter :String?, #twitterSource :String?, #fbid :String?, #name :String?, onlyPages :Bool = false) {
     var params = Dictionary<String, String>()
     if (phone != nil)               {params["phone"] = phone}
