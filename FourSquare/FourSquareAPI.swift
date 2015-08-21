@@ -21,14 +21,6 @@ let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
 let FSRedirectURL = "foursquareapi://authorized"
 let FSRedirectURLScheme = "foursquareapi"
 
-let FSUsersURL = "https://api.foursquare.com/v2/users"
-let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
-
-let FSUserFriendRequests = "requests"
-let FSUserSearch = "search"
-let FSUserCheckins = "checkins"
-let FSUserFriends = "friends"
-
 //MARK: SETUP
 
 enum FSCheckinSort: String {
@@ -89,7 +81,7 @@ class FourSquareAPI :NSObject {
     
     //https://developer.foursquare.com/docs/users/requests
     class func userPendingFriendRequests() {
-        var requestURL = FSUsersURL + "/" + FSUserFriendRequests
+        var requestURL = FSUsersURL + "/requests"
         Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
     }
     
@@ -104,7 +96,7 @@ class FourSquareAPI :NSObject {
         if (name != nil)                {params["name"] = name}
         if (onlyPages)                  {params["onlyPages"] = "true"}
         
-        var requestURL = FSUsersURL + "/" + FSUserSearch
+        var requestURL = FSUsersURL + "/search"
         Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
     }
     
@@ -120,7 +112,7 @@ class FourSquareAPI :NSObject {
         if afterTimestamp > 0 {params["afterTimestamp"] = String(format: "%.0f", afterTimestamp)}
         if beforeTimestamp > 0 {params["beforeTimestamp"] = String(format: "%.0f", beforeTimestamp)}
         
-        var requestURL = FSUsersURL + "/" + FSSelfUserId + "/" + FSUserCheckins
+        var requestURL = FSUsersURL + "/" + FSSelfUserId + "/checkins"
         Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
     }
     
@@ -131,7 +123,7 @@ class FourSquareAPI :NSObject {
         params["limit"] = String(limit)
         params["offset"] = String(offset)
         
-        var fetchUsersURL = FSUsersURL + "/" + userId + "/" + FSUserFriends
+        var fetchUsersURL = FSUsersURL + "/" + userId + "/friends"
         Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: params, isUserless:!(userId == FSSelfUserId))
     }
     

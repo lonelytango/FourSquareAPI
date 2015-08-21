@@ -9,6 +9,8 @@
 import Alamofire
 
 let FSDefaultParameters = ["v":"20140806", "client_id":FSClientId, "client_secret":FSClientSecret]
+let FSUsersURL = "https://api.foursquare.com/v2/users"
+let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
 
 enum FSMode: String {
     case FourSquare = "foursquare"
