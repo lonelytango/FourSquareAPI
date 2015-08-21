@@ -216,6 +216,7 @@
 				TargetAttributes = {
 					4DDE77881B8476E000809D91 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = BJD4TB66LH;
 					};
 					4DDE779D1B8476E100809D91 = {
 						CreatedOnToolsVersion = 6.4;
@@ -492,6 +493,7 @@
 			baseConfigurationReference = D8A990863744CA1A6B08A380 /* Pods-FourSquareAPI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FourSquareAPI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -503,6 +505,7 @@
 			baseConfigurationReference = D5B1B333FF4A246B1CB928CF /* Pods-FourSquareAPI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FourSquareAPI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

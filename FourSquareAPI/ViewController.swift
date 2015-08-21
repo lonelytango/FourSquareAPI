@@ -15,10 +15,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        FourSquareAPI.getVenueNearLocation("Elmhurst")
-        //FourSquareAPI.getUser("31662724")
+        //FourSquareAPI.getVenueNearLocation("Elmhurst")
+        //FourSquareAPI.getActingUser()
         //FourSquareAPI.getUserPendingFriendRequests()
         //FourSquareAPI.searchUsers(phone: nil, email: nil, twitter: nil, twitterSource: "lonelytango", fbid: nil, name: nil)
+        FourSquareAPI.userListFriends(userId:"self", limit: 10, offset: 0)
     }
 
     override func didReceiveMemoryWarning() {

@@ -9,8 +9,10 @@
 import Foundation
 import FSOAuth
 
-public func oauthErrorMessageForCode(errorCode :FSOAuthErrorCode) -> String? {
-    switch errorCode {
+class ErrorHandling :NSObject {
+    
+    class func oauthErrorMessageForCode(errorCode :FSOAuthErrorCode) -> String? {
+        switch errorCode {
         case .None:
             return nil
         case .InvalidClient:
@@ -27,12 +29,12 @@ public func oauthErrorMessageForCode(errorCode :FSOAuthErrorCode) -> String? {
             fallthrough
         default:
             return "Unknown error"
+        }
     }
-}
-
-
-public func oauthStatusErrorMessageForCode(errorCode :FSOAuthStatusCode) -> String? {
-    switch errorCode {
+    
+    
+    class func oauthStatusErrorMessageForCode(errorCode :FSOAuthStatusCode) -> String? {
+        switch errorCode {
         case .Success:
             return "Connect Success"
         case .ErrorInvalidCallback:
@@ -45,5 +47,6 @@ public func oauthStatusErrorMessageForCode(errorCode :FSOAuthStatusCode) -> Stri
             return "Installed FSQ app does not support oauth"
         default:
             return "Unknown Status"
+        }
     }
 }

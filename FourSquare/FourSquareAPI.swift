@@ -10,6 +10,10 @@ import Foundation
 import FSOAuth
 
 let FourSquareDefaultFetchLimit = 1
+let FSCheckinDefaultFetchLimit = 10
+let FSFriendListDefaultFetchLimit = 10
+let FSSelfUserId = "self"
+
 let FSOAuthAccessTokenKey = "kFourSquareOAuthAccessToken"
 let FSClientId = "K2EJ4LYIPLLVB42VMWRAADPETIAQIZGPERXJBRPWOICZYBHY"
 let FSClientSecret = "TAOWRLEICGFO4F2VDNDAG2FOEKN1JK1FXLK42ZDBW1EUFRTV"
@@ -19,90 +23,126 @@ let FSRedirectURLScheme = "foursquareapi"
 
 let FSUsersURL = "https://api.foursquare.com/v2/users"
 let FSVenuesURL = "https://api.foursquare.com/v2/venues/explore"
-let FSUserEndpointRequest = "requests"
-let FSUserEndpointSearch = "search"
+
+let FSUserFriendRequests = "requests"
+let FSUserSearch = "search"
+let FSUserCheckins = "checkins"
+let FSUserFriends = "friends"
 
 //MARK: SETUP
 
-public func handleUrl(url :NSURL) {
-    if url.scheme == FSRedirectURLScheme {
-        var errorCode :FSOAuthErrorCode = .None
-        var accessCode = FSOAuth.accessCodeForFSOAuthURL(url, error: &errorCode)
-        
-        if errorCode == FSOAuthErrorCode.None {
-            println("Access Code: \(accessCode)")
+enum FSCheckinSort: String {
+    case NewestFirst = "newestfirst"
+    case OldestFirst = "oldestfirst"
+}
+
+class FourSquareAPI :NSObject {
+    
+    class func handleUrl(url :NSURL) {
+        if url.scheme == FSRedirectURLScheme {
+            var errorCode :FSOAuthErrorCode = .None
+            var accessCode = FSOAuth.accessCodeForFSOAuthURL(url, error: &errorCode)
             
-            FSOAuth.requestAccessTokenForCode(accessCode, clientId: FSClientId, callbackURIString:FSRedirectURL, clientSecret: FSClientSecret, completionBlock: { (accessToken, requestComplete, errorCode) -> Void in
-                if (requestComplete) {
-                    Manager.sharedInstance.latestAccessToken = accessToken
-                    NSUserDefaults.setFSOAuthAccessToken(accessToken)
-                    println("Access Token: \(accessToken)")
-                } else {
-                    let errorMessage = oauthErrorMessageForCode(errorCode)
-                    println("Error Message: \(errorMessage)")
-                }
-            })
-            
-        } else {
-            let errorMessage = oauthErrorMessageForCode(errorCode)
-            println("Error Message: \(errorMessage)")
+            if errorCode == FSOAuthErrorCode.None {
+                println("Access Code: \(accessCode)")
+                
+                FSOAuth.requestAccessTokenForCode(accessCode, clientId: FSClientId, callbackURIString:FSRedirectURL, clientSecret: FSClientSecret, completionBlock: { (accessToken, requestComplete, errorCode) -> Void in
+                    if (requestComplete) {
+                        Manager.sharedInstance.latestAccessToken = accessToken
+                        NSUserDefaults.setFSOAuthAccessToken(accessToken)
+                        println("Access Token: \(accessToken)")
+                    } else {
+                        let errorMessage = ErrorHandling.oauthErrorMessageForCode(errorCode)
+                        println("Error Message: \(errorMessage)")
+                    }
+                })
+                
+            } else {
+                let errorMessage = ErrorHandling.oauthErrorMessageForCode(errorCode)
+                println("Error Message: \(errorMessage)")
+            }
         }
     }
-}
-
-public func setupOAuthAccessCode() {
-    //Note that OAuth Key will not be expired once set up.
     
-    let accessToken = NSUserDefaults.getFSOAuthAccessToken()
-    if accessToken == nil {
-        var statusCode :FSOAuthStatusCode = FSOAuth.authorizeUserUsingClientId(FSClientId, callbackURIString: FSRedirectURL)
-        var errorMessage = FourSquareAPI.oauthStatusErrorMessageForCode(statusCode)
-        println("OAuth Status: \(errorMessage)")
-    
-    } else {
-        //Check if the OAuth key is valid.
-        Manager.sharedInstance.latestAccessToken = accessToken
-        println("Access Token already setup: \(accessToken)")
+    class func setupOAuthAccessCode() {
+        //Note that OAuth Key will not be expired once set up.
+        
+        let accessToken = NSUserDefaults.getFSOAuthAccessToken()
+        if accessToken == nil {
+            var statusCode :FSOAuthStatusCode = FSOAuth.authorizeUserUsingClientId(FSClientId, callbackURIString: FSRedirectURL)
+            var errorMessage = ErrorHandling.oauthStatusErrorMessageForCode(statusCode)
+            println("OAuth Status: \(errorMessage)")
+            
+        } else {
+            //Check if the OAuth key is valid.
+            Manager.sharedInstance.latestAccessToken = accessToken
+            println("Access Token already setup: \(accessToken)")
+        }
     }
-}
-
-
-//MARK: USERS - GENERAL
-public func getUser(userId :String) {
-    var fetchUsersURL = FSUsersURL + "/" + userId
-    Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil)
-}
-
-//https://developer.foursquare.com/docs/users/requests
-public func getUserPendingFriendRequests() {
-    var requestURL = FSUsersURL + "/" + FSUserEndpointRequest
-    Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
-}
-
-//https://developer.foursquare.com/docs/users/search
-public func searchUsers(#phone :String?, #email :String?, #twitter :String?, #twitterSource :String?, #fbid :String?, #name :String?, onlyPages :Bool = false) {
-    var params = Dictionary<String, String>()
-    if (phone != nil)               {params["phone"] = phone}
-    if (email != nil)               {params["email"] = email}
-    if (twitter != nil)             {params["twitter"] = twitter}
-    if (twitterSource != nil)       {params["twitterSource"] = twitterSource}
-    if (fbid != nil)                {params["fbid"] = fbid}
-    if (name != nil)                {params["name"] = name}
-    if (onlyPages)                  {params["onlyPages"] = "true"}
     
-    var requestURL = FSUsersURL + "/" + FSUserEndpointSearch
-    Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
-}
-
-//MARK: USERS - ASPECTS
-
-//MARK: USERS - ACTIONS
-
-
-//MARK: VENUE
-public func getVenueNearLocation(location :String, limit :Int = FourSquareDefaultFetchLimit) {
-    var fetchParams = ["near":location, "limit":String(limit)]
-    Manager.sharedInstance.request(method: .GET, URLString: FSVenuesURL, parameters: fetchParams)
+    
+    //MARK: USERS - GENERAL
+    class func getUser(userId :String) {
+        var fetchUsersURL = FSUsersURL + "/" + userId
+        Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil, isUserless:!(userId == FSSelfUserId))
+    }
+    
+    //https://developer.foursquare.com/docs/users/requests
+    class func userPendingFriendRequests() {
+        var requestURL = FSUsersURL + "/" + FSUserFriendRequests
+        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
+    }
+    
+    //https://developer.foursquare.com/docs/users/search
+    class func userSearch(#phone :String?, email :String?, twitter :String?, twitterSource :String?, fbid :String?, name :String?, onlyPages :Bool = false) {
+        var params = Dictionary<String, String>()
+        if (phone != nil)               {params["phone"] = phone}
+        if (email != nil)               {params["email"] = email}
+        if (twitter != nil)             {params["twitter"] = twitter}
+        if (twitterSource != nil)       {params["twitterSource"] = twitterSource}
+        if (fbid != nil)                {params["fbid"] = fbid}
+        if (name != nil)                {params["name"] = name}
+        if (onlyPages)                  {params["onlyPages"] = "true"}
+        
+        var requestURL = FSUsersURL + "/" + FSUserSearch
+        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
+    }
+    
+    //MARK: USERS - ASPECTS
+    //https://developer.foursquare.com/docs/users/checkins
+    class func userCheckinsHistory(limit :Int = FSCheckinDefaultFetchLimit, offset :Int = 0, sort :FSCheckinSort = .NewestFirst, afterTimestamp :NSTimeInterval, beforeTimestamp :NSTimeInterval) {
+        
+        var params = Dictionary<String, String>()
+        params["limit"] = String(limit)
+        params["offset"] = String(offset)
+        params["sort"] = sort.rawValue
+        
+        if afterTimestamp > 0 {params["afterTimestamp"] = String(format: "%.0f", afterTimestamp)}
+        if beforeTimestamp > 0 {params["beforeTimestamp"] = String(format: "%.0f", beforeTimestamp)}
+        
+        var requestURL = FSUsersURL + "/" + FSSelfUserId + "/" + FSUserCheckins
+        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
+    }
+    
+    //https://developer.foursquare.com/docs/users/friends
+    class func userListFriends(#userId :String, limit :Int = FSFriendListDefaultFetchLimit, offset :Int = 0) {
+        
+        var params = Dictionary<String, String>()
+        params["limit"] = String(limit)
+        params["offset"] = String(offset)
+        
+        var fetchUsersURL = FSUsersURL + "/" + userId + "/" + FSUserFriends
+        Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: params, isUserless:!(userId == FSSelfUserId))
+    }
+    
+    //MARK: USERS - ACTIONS
+    
+    
+    //MARK: VENUE
+    class func getVenueNearLocation(location :String, limit :Int = FourSquareDefaultFetchLimit) {
+        var fetchParams = ["near":location, "limit":String(limit)]
+        Manager.sharedInstance.request(method: .GET, URLString: FSVenuesURL, parameters: fetchParams)
+    }
 }
 
 
