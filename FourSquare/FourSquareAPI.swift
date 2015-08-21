@@ -75,14 +75,14 @@ class FourSquareAPI :NSObject {
     
     //MARK: USERS - GENERAL
     class func getUser(userId :String) {
-        var fetchUsersURL = FSUsersURL + "/" + userId
-        Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: nil, isUserless:!(userId == FSSelfUserId))
+        var url = FSEndpoint.Users.rawValue + "/" + userId
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: nil, isUserless:!(userId == FSSelfUserId))
     }
     
     //https://developer.foursquare.com/docs/users/requests
     class func userPendingFriendRequests() {
-        var requestURL = FSUsersURL + "/requests"
-        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: nil, isUserless:false)
+        var url = FSEndpoint.Users.rawValue + "/" + "/requests"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: nil, isUserless:false)
     }
     
     //https://developer.foursquare.com/docs/users/search
@@ -96,8 +96,8 @@ class FourSquareAPI :NSObject {
         if (name != nil)                {params["name"] = name}
         if (onlyPages)                  {params["onlyPages"] = "true"}
         
-        var requestURL = FSUsersURL + "/search"
-        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
+        var url = FSEndpoint.Users.rawValue + "/search"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: params, isUserless:false)
     }
     
     //MARK: USERS - ASPECTS
@@ -112,8 +112,8 @@ class FourSquareAPI :NSObject {
         if afterTimestamp > 0 {params["afterTimestamp"] = String(format: "%.0f", afterTimestamp)}
         if beforeTimestamp > 0 {params["beforeTimestamp"] = String(format: "%.0f", beforeTimestamp)}
         
-        var requestURL = FSUsersURL + "/" + FSSelfUserId + "/checkins"
-        Manager.sharedInstance.request(method: .GET, URLString: requestURL, parameters: params, isUserless:false)
+        var url = FSEndpoint.Users.rawValue + "/" + FSSelfUserId + "/checkins"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: params, isUserless:false)
     }
     
     //https://developer.foursquare.com/docs/users/friends
@@ -123,8 +123,8 @@ class FourSquareAPI :NSObject {
         params["limit"] = String(limit)
         params["offset"] = String(offset)
         
-        var fetchUsersURL = FSUsersURL + "/" + userId + "/friends"
-        Manager.sharedInstance.request(method: .GET, URLString: fetchUsersURL, parameters: params, isUserless:!(userId == FSSelfUserId))
+        var url = FSEndpoint.Users.rawValue + "/" + userId + "/friends"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: params, isUserless:!(userId == FSSelfUserId))
     }
     
     //MARK: USERS - ACTIONS
@@ -133,7 +133,8 @@ class FourSquareAPI :NSObject {
     //MARK: VENUE
     class func getVenueNearLocation(location :String, limit :Int = FourSquareDefaultFetchLimit) {
         var fetchParams = ["near":location, "limit":String(limit)]
-        Manager.sharedInstance.request(method: .GET, URLString: FSVenuesURL, parameters: fetchParams)
+        var url = FSEndpoint.Venues.rawValue + "/explore"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: fetchParams)
     }
 }
 
