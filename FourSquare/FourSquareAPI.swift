@@ -8,10 +8,10 @@
 
 import Foundation
 import FSOAuth
+import CoreLocation
 
 let FourSquareDefaultFetchLimit = 1
-let FSCheckinDefaultFetchLimit = 10
-let FSFriendListDefaultFetchLimit = 10
+let FSDefaultFetchLimit = 10
 let FSSelfUserId = "self"
 
 let FSOAuthAccessTokenKey = "kFourSquareOAuthAccessToken"
@@ -28,6 +28,13 @@ enum FSCheckinSort: String {
     case OldestFirst = "oldestfirst"
 }
 
+enum FSUserListGroup: String, Equatable {
+    case Created = "created"
+    case Followed = "followed"
+    case Edited = "edited"
+    case Friends = "friends"
+    case Suggested = "suggested"
+}
 class FourSquareAPI :NSObject {
     
     class func handleUrl(url :NSURL) {
@@ -102,7 +109,7 @@ class FourSquareAPI :NSObject {
     
     //MARK: USERS - ASPECTS
     //https://developer.foursquare.com/docs/users/checkins
-    class func userCheckinsHistory(limit :Int = FSCheckinDefaultFetchLimit, offset :Int = 0, sort :FSCheckinSort = .NewestFirst, afterTimestamp :NSTimeInterval, beforeTimestamp :NSTimeInterval) {
+    class func userCheckinsHistory(limit :Int = FSDefaultFetchLimit, offset :Int = 0, sort :FSCheckinSort = .NewestFirst, afterTimestamp :NSTimeInterval, beforeTimestamp :NSTimeInterval) {
         
         var params = Dictionary<String, String>()
         params["limit"] = String(limit)
@@ -117,13 +124,25 @@ class FourSquareAPI :NSObject {
     }
     
     //https://developer.foursquare.com/docs/users/friends
-    class func userListFriends(#userId :String, limit :Int = FSFriendListDefaultFetchLimit, offset :Int = 0) {
+    class func userListFriends(#userId :String, limit :Int = FSDefaultFetchLimit, offset :Int = 0) {
         
         var params = Dictionary<String, String>()
         params["limit"] = String(limit)
         params["offset"] = String(offset)
         
         var url = FSEndpoint.Users.rawValue + "/" + userId + "/friends"
+        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: params, isUserless:!(userId == FSSelfUserId))
+    }
+    
+    class func userLists(#userId :String, group :String = FSUserListGroup.Edited.rawValue, ll: CLLocationCoordinate2D, limit :Int = FSDefaultFetchLimit, offset :Int = 0) {
+        
+        var params = Dictionary<String, String>()
+        params["limit"] = "\(limit)"
+        params["offset"] = "\(offset)"
+        params["group"] = group
+        if CLLocationCoordinate2DIsValid(ll) {params["ll"] = "\(ll.latitude), \(ll.longitude)"}
+        
+        var url = FSEndpoint.Users.rawValue + "/" + userId + "/lists"
         Manager.sharedInstance.request(method: .GET, URLString: url, parameters: params, isUserless:!(userId == FSSelfUserId))
     }
     
@@ -137,7 +156,6 @@ class FourSquareAPI :NSObject {
         Manager.sharedInstance.request(method: .GET, URLString: url, parameters: fetchParams)
     }
 }
-
 
 
 //MARK: EXTENSION

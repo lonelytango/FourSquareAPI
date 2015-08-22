@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		26EA9CE148A8B405A70301FB /* Pods_FourSquareAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		4D3B3A1B1B88B1AD00665A2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */; };
 		4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE778E1B8476E100809D91 /* AppDelegate.swift */; };
 		4DDE77911B8476E100809D91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE77901B8476E100809D91 /* ViewController.swift */; };
 		4DDE77941B8476E100809D91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE77921B8476E100809D91 /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FourSquareAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		4DDE77891B8476E100809D91 /* FourSquareAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourSquareAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE778D1B8476E100809D91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DDE778E1B8476E100809D91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D3B3A1B1B88B1AD00665A2E /* CoreLocation.framework in Frameworks */,
 				26EA9CE148A8B405A70301FB /* Pods_FourSquareAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +147,7 @@
 		7A695A68E3686FDD0FEA74F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */,
 				2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */,
 				FD9F6719BC35CD957914BA54 /* Pods_FourSquareAPITests.framework */,
 			);
