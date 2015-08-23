@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		26EA9CE148A8B405A70301FB /* Pods_FourSquareAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4D3B3A1B1B88B1AD00665A2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */; };
+		4D3B3A1E1B88B6BE00665A2E /* FSEndpointUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */; };
 		4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE778E1B8476E100809D91 /* AppDelegate.swift */; };
 		4DDE77911B8476E100809D91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE77901B8476E100809D91 /* ViewController.swift */; };
 		4DDE77941B8476E100809D91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE77921B8476E100809D91 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FourSquareAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSEndpointUser.swift; sourceTree = "<group>"; };
 		4DDE77891B8476E100809D91 /* FourSquareAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourSquareAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE778D1B8476E100809D91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DDE778E1B8476E100809D91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */,
 				E53405FF1B850DC6009EA517 /* Manager.swift */,
 				E53406011B853417009EA517 /* ErrorHandling.swift */,
+				4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */,
 			);
 			path = FourSquare;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */,
 				E53406021B853417009EA517 /* ErrorHandling.swift in Sources */,
 				4DDE77B01B84774D00809D91 /* FourSquareAPI.swift in Sources */,
+				4D3B3A1E1B88B6BE00665A2E /* FSEndpointUser.swift in Sources */,
 				E53406001B850DC6009EA517 /* Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
