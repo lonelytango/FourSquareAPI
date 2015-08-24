@@ -10,6 +10,7 @@
 		26EA9CE148A8B405A70301FB /* Pods_FourSquareAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4D3B3A1B1B88B1AD00665A2E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */; };
 		4D3B3A1E1B88B6BE00665A2E /* FSEndpointUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */; };
+		4D804BA71B8A2BB100CE7ABE /* FSEndpointVenue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D804BA61B8A2BB100CE7ABE /* FSEndpointVenue.swift */; };
 		4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE778E1B8476E100809D91 /* AppDelegate.swift */; };
 		4DDE77911B8476E100809D91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE77901B8476E100809D91 /* ViewController.swift */; };
 		4DDE77941B8476E100809D91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DDE77921B8476E100809D91 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 		2C754FDAF9E6A67D7AE4D324 /* Pods_FourSquareAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FourSquareAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D3B3A1A1B88B1AD00665A2E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSEndpointUser.swift; sourceTree = "<group>"; };
+		4D804BA61B8A2BB100CE7ABE /* FSEndpointVenue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSEndpointVenue.swift; sourceTree = "<group>"; };
 		4DDE77891B8476E100809D91 /* FourSquareAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FourSquareAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE778D1B8476E100809D91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DDE778E1B8476E100809D91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,7 +48,7 @@
 		4DDE779E1B8476E100809D91 /* FourSquareAPITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FourSquareAPITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDE77A31B8476E100809D91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DDE77A41B8476E100809D91 /* FourSquareAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquareAPITests.swift; sourceTree = "<group>"; };
-		4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FourSquareAPI.swift; sourceTree = "<group>"; };
+		4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FourSquareAPI.swift; path = FourSquare/FourSquareAPI.swift; sourceTree = "<group>"; };
 		BA6FD2B102809063752355B3 /* Pods-FourSquareAPITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FourSquareAPITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FourSquareAPITests/Pods-FourSquareAPITests.debug.xcconfig"; sourceTree = "<group>"; };
 		C292E2E042A3C324B8177EF7 /* Pods-FourSquareAPITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FourSquareAPITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FourSquareAPITests/Pods-FourSquareAPITests.release.xcconfig"; sourceTree = "<group>"; };
 		D5B1B333FF4A246B1CB928CF /* Pods-FourSquareAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FourSquareAPI.release.xcconfig"; path = "Pods/Target Support Files/Pods-FourSquareAPI/Pods-FourSquareAPI.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 		4DDE77801B8476E000809D91 = {
 			isa = PBXGroup;
 			children = (
+				4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */,
 				4DDE77AE1B84771700809D91 /* FourSquare */,
 				4DDE778B1B8476E100809D91 /* FourSquareAPI */,
 				4DDE77A11B8476E100809D91 /* FourSquareAPITests */,
@@ -139,10 +142,10 @@
 		4DDE77AE1B84771700809D91 /* FourSquare */ = {
 			isa = PBXGroup;
 			children = (
-				4DDE77AF1B84774D00809D91 /* FourSquareAPI.swift */,
 				E53405FF1B850DC6009EA517 /* Manager.swift */,
 				E53406011B853417009EA517 /* ErrorHandling.swift */,
 				4D3B3A1D1B88B6BE00665A2E /* FSEndpointUser.swift */,
+				4D804BA61B8A2BB100CE7ABE /* FSEndpointVenue.swift */,
 			);
 			path = FourSquare;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				4DDE778F1B8476E100809D91 /* AppDelegate.swift in Sources */,
 				E53406021B853417009EA517 /* ErrorHandling.swift in Sources */,
 				4DDE77B01B84774D00809D91 /* FourSquareAPI.swift in Sources */,
+				4D804BA71B8A2BB100CE7ABE /* FSEndpointVenue.swift in Sources */,
 				4D3B3A1E1B88B6BE00665A2E /* FSEndpointUser.swift in Sources */,
 				E53406001B850DC6009EA517 /* Manager.swift in Sources */,
 			);

@@ -24,7 +24,7 @@ public class Manager {
     
     var latestAccessToken = NSUserDefaults.getFSOAuthAccessToken()
     
-    func request(#method :Method, URLString :URLStringConvertible, parameters :Dictionary <String, String>?, isUserless :Bool = true, mode :FSMode = .FourSquare) {
+    func request(#method :Method, URLString :URLStringConvertible, parameters :Dictionary <String, String>? = nil, isUserless :Bool = true, mode :FSMode = .FourSquare) {
         
         var fetchParams = parameters
         if (parameters != nil) {

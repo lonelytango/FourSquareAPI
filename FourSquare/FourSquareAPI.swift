@@ -1,4 +1,4 @@
-//
+ //
 //  FourSquareAPI.swift
 //  FourSquareAPI
 //
@@ -76,13 +76,6 @@ class FourSquareAPI :NSObject {
             Manager.sharedInstance.latestAccessToken = accessToken
             println("Access Token already setup: \(accessToken)")
         }
-    }
-    
-    //MARK: VENUE
-    class func getVenueNearLocation(location :String, limit :Int = FourSquareDefaultFetchLimit) {
-        var fetchParams = ["near":location, "limit":String(limit)]
-        var url = FSEndpoint.Venues.rawValue + "/explore"
-        Manager.sharedInstance.request(method: .GET, URLString: url, parameters: fetchParams)
     }
 }
 
